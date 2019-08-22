@@ -4,14 +4,12 @@ import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
- * //TODO add comments.
  *
- * @author Petr Arsentev (parsentev@yandex.ru)
+ * @author Petr B.
  * @version $Id$
- * @since 0.1
+ * @since 1
  */
 public class Logic {
     private final Figure[] figures = new Figure[32];
@@ -25,10 +23,22 @@ public class Logic {
         boolean rst = false;
         int index = this.findBy(source);
         if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
+            try {
+                Cell[] steps = this.figures[index].way(source, dest);
+                if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+                    for (Cell step : steps) {
+                        int check = this.findBy(step);
+                        if (check != -1) {
+                            throw new NoEmptyExeption("Нельзя ставить на занятые клетки!");
+                        }
+                    }
+                    this.figures[index] = this.figures[index].copy(dest);
+                    rst = true;
+                }
+            } catch (NoEmptyExeption nee) {
+                System.out.println(nee.getMessage());
+            } catch (IllegalStateException ise) {
+                System.out.println(ise.getLocalizedMessage());
             }
         }
         return rst;

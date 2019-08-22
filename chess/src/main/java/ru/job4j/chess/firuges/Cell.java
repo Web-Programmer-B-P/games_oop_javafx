@@ -17,4 +17,16 @@ public enum Cell {
         this.x = x;
         this.y = y;
     }
+
+    public static Cell getStap(int x, int y) {
+        Cell name = A1;
+        Cell[] all = Cell.values();
+        for (Cell value : all) {
+            if (value.x == x && value.y == y) {
+                name = value;
+                break;
+            }
+        }
+        return name;
+    }
 }
