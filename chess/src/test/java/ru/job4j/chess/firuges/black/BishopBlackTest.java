@@ -12,7 +12,7 @@ public class BishopBlackTest {
     public void checkCorrectPosition() {
         BishopBlack bishop = new BishopBlack(Cell.B1);
         Cell result = bishop.position();
-        assertThat(result, is(Cell.B3));
+        assertThat(result, is(Cell.B1));
     }
 
     @Test
